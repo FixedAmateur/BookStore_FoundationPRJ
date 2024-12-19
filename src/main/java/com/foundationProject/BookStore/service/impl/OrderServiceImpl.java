@@ -31,4 +31,12 @@ public class OrderServiceImpl implements OrderService {
         return orderResponse;
     }
 
+    @Override
+    public OrderResponse getCart(Long userId) {
+
+        Order order = orderRepository.findByStatusAndUserId(false, userId).orElseThrow(() -> new ResourceNotFoundException("Order", "status", false));
+        OrderResponse orderResponse = modelMapper.map(order, OrderResponse.class);
+        return orderResponse;
+    }
+
 }

@@ -34,6 +34,10 @@ public class OrderController {
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
-
-
+    @Operation(summary = "Get Cart from User Id", description = "Get order with false status by User Id API")
+    @GetMapping("user/{userId}/cart")
+    public ResponseEntity<ApiResponse> getCartByUserId (@PathVariable("userId") Long userId){
+        ApiResponse apiResponse = ApiResponse.success(orderService.getCart(userId));
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
 }

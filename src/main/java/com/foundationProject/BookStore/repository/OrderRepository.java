@@ -11,4 +11,7 @@ import java.util.Optional;
 public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("from Order o where o.user.userId=:userId")
     Optional<Order> findByUserId(Long userId);
+
+    @Query("from Order o where o.order.status=:status and o.user.userId=:userId")
+    Optional<Order> findByStatusAndUserId(boolean status, Long userId);
 }
