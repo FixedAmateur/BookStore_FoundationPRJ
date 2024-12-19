@@ -1,6 +1,8 @@
 package com.foundationProject.BookStore.service.impl;
 
 
+import com.foundationProject.BookStore.exception.AppException;
+import com.foundationProject.BookStore.exception.ErrorCode;
 import com.foundationProject.BookStore.exception.ResourceNotFoundException;
 import com.foundationProject.BookStore.model.dto.OrderItemDto;
 import com.foundationProject.BookStore.model.entity.Book;
@@ -129,6 +131,20 @@ public class OrderItemServiceImpl implements OrderItemService {
          return pageCustom;
     }
 
+
+
+    @Override
+    public PageCustom<OrderItemResponse> getAllOrderItemInCart(Long userId, Pageable pageable) {
+        Page<OrderItem> orderItems = orderItemRepository.findAllByUserIdAndStatus(userId,false,pageable);
+
+        PageCustom<OrderItemResponse> pageCustom = PageCustom.<OrderItemResponse>builder()
+                .pageNo(orderItems.getNumber() + 1)
+                .pageSize(orderItems.getSize())
+                .totalPages(orderItems.getTotalPages())
+                .pageContent(orderItems.getContent().stream().map(orderItem1 -> modelMapper.map(orderItem1, OrderItemResponse.class)).toList())
+                .build();
+        return pageCustom;
+    }
 
 
 }

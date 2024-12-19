@@ -83,7 +83,7 @@ public class OrderItemController {
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
-    @Operation(summary = "Get Order History By Order Id", description = "Get Order History By Order Id API")
+    @Operation(summary = "Get Order Item History By Order Id", description = "Get Order Item History By Order Id API")
     @GetMapping("/history/order/{orderId}")
     public ResponseEntity<ApiResponse> getOrderHistoryByOrderId(
             @PathVariable("orderId") Long orderId,
@@ -96,7 +96,7 @@ public class OrderItemController {
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
-    @Operation(summary = "Get Order History By User Id", description = "Get Order History By User Id API")
+    @Operation(summary = "Get Order Item History By User Id", description = "Get Order Item History By User Id API")
     @GetMapping("/history/user/{userId}")
     public ResponseEntity<ApiResponse> getOrderHistoryByUserId(
             @PathVariable("userId") Long userId,

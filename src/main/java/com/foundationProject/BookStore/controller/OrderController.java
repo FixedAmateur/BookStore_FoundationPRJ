@@ -6,12 +6,12 @@ import com.foundationProject.BookStore.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -40,4 +40,17 @@ public class OrderController {
         ApiResponse apiResponse = ApiResponse.success(orderService.getCart(userId));
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
+
+    @Operation(summary = "Get All Order History from User Id", description = "Get order with true status by User Id API")
+    @GetMapping("user/{userId}/history")
+    public ResponseEntity<ApiResponse> getOrderHistoryByUserId (@PathVariable("userId") Long userId,
+                                                                @RequestParam(value = "pageNo", defaultValue = "1", required = false) int pageNo,
+                                                                @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+                                                                @RequestParam(value = "sortBy", defaultValue = "createdAt", required = false) String sortBy
+    ) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, Sort.by(sortBy).ascending());
+        ApiResponse apiResponse = ApiResponse.success(orderService.getOrderHistoryByUserId(userId,pageable));
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
+
 }

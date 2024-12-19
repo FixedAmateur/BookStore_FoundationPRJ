@@ -16,14 +16,14 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     @Query("from OrderItem o where o.order.orderId=:orderId and o.status=:b")
     Page<OrderItem> findAllByOrderIdAndStatus(Long orderId, boolean b, Pageable pageable);
 
-    @Query("from OrderItem o where o.order.user.userId=:userId and o.status=:b")
-    Page<OrderItem> findAllByUserIdAndStatus(Long userId, boolean b, Pageable pageable);
+    @Query("from OrderItem o where o.order.user.userId=:userId and o.status=:status")
+    Page<OrderItem> findAllByUserIdAndStatus(Long userId, boolean status, Pageable pageable);
 
-    @Query("select case when count(o)> 0 then true else false end from OrderItem o where o.order.orderId=:orderId and o.status=:b and o.book.bookId=:bookId")
+    @Query("select case when count(o) > 0 then true else false end from OrderItem o where o.order.orderId=:orderId and o.status=:b and o.book.bookId=:bookId")
     boolean existsByOrderIdAndStatusAndBookId(Long orderId, boolean b, Long bookId);
 
-    @Query("from OrderItem o where o.order.orderId=:orderId and o.status=:b")
-    Optional<OrderItem> findByOrderIdAndStatus(Long orderId, boolean b);
+    @Query("select case when count(o) > 0 then true else false end from OrderItem o where o.user.userId:=userId and o.status=status")
+    boolean existsByUserIdAndStatus(Long userId, boolean status);
 
     @Query("from OrderItem o where o.book.bookId=:bookId and o.status=:b and o.book.bookId=:bookId1")
     Optional<OrderItem> findByOrderIdAndStatusAndBookId(Long bookId, boolean b, Long bookId1);

@@ -24,4 +24,6 @@ public interface OrderItemService {
     PageCustom<OrderItemResponse> getAllOrderedHistory(Long orderId, Pageable pageable);
 
     PageCustom<OrderItemResponse> getAllOrderedHistoryByUserId(Long userId, Pageable pageable);
+
+    PageCustom<OrderItemResponse> getAllOrderItemInCart(Long userId, Pageable pageable);
 }

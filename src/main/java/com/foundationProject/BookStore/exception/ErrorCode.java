@@ -20,7 +20,7 @@ public enum ErrorCode {
     ORDER_NOT_EXISTED(404, "Order does not exist", HttpStatus.NOT_FOUND),
 
     CATEGORY_NOT_EXISTED(404, "Category does not exist", HttpStatus.NOT_FOUND),
-
+    CART_NOT_UNIQUE(400, "Duplicated cart for one user", HttpStatus.BAD_REQUEST),
 
 
 
