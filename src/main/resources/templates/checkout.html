@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="icon" th:href="@{/image/img.png}"></link>
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
+    <link rel="stylesheet" href="../css/mdb.min.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body style="padding-top:60px">
+<nav th:replace="~{nav::navbar}"></nav>
+<section class="h-100 h-custom" style="background-color: #eee;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col">
+                <div class="card">
+                    <div class="card">
+                        <div class="card-body mx-4">
+                            <div class="container">
+                                <p class="my-5 mx-5" style="font-size: 30px; text-align: center"><strong>Thanks for your purchase</strong></p>
+                                <div class="row">
+                                    <ul class="list-unstyled">
+                                        <li class="text-black" th:text="${purchase.userEntity.nickname}"></li>
+                                        <li class="text-muted mt-1" th:text="'#' + ${purchase.id}"><span class="text-black">Invoice</span></li>
+                                        <li class="text-black mt-1" th:text="'Purchase date: ' + ${purchase.date}"></li>
+                                    </ul>
+                                    <hr>
+                                    <div class="col-xl-10">
+                                        <p>Sub total</p>
+                                    </div>
+                                    <div class="col-xl-2">
+                                        <p class="float-end" th:text="${total}+'₫'">
+                                        </p>
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-10">
+                                        <p>Delivery</p>
+                                    </div>
+                                    <div class="col-xl-2">
+                                        <p class="float-end">20000.0₫
+                                        </p>
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div class="row text-black">
+
+                                    <div class="col-xl-12">
+                                        <p class="float-end fw-bold" th:text="'Total: ' + ${total + 20000} +'₫'">
+                                        </p>
+                                    </div>
+                                    <hr style="border: 2px solid black;">
+                                </div>
+                                <div class="text-center" style="margin-top: 90px;">
+                                    <a><u class="text-info">View in purchase history</u></a>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+<script th:src="@{/js/callPurchaseDetail.js}"></script>
+<script type="text/javascript" src="../js/mdb.umd.min.js"></script>
+<script type="text/javascript" src="../js/main.js"></script>
+<script type="text/javascript" src="../js/counter.js"></script>
+</html>

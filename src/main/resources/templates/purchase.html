@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Purchases</title>
+    <link rel="icon" th:href="@{/image/img.png}"></link>
+</head>
+<body style="padding-top:60px">
+<div class="home">
+    <a th:href="@{/books/view}">Home</a>
+</div>
+<div class="search-container" style="display: flex; justify-content: space-between;">
+    <div></div>
+    <div style="display:flex">
+        <div></div>
+        <form th:action="@{/books/view}" th:object="${request}" method="post" style="margin-top:5px">
+            <input type="text" name="title" id="title" placeholder="Search..." style="border-color: black;font-family: cursive;">
+            <button type="submit" style="border:none;background-color: azure;"><i class="fa fa-search"></i></button>
+        </form>
+        <a th:href="@{/user/purchases}" style="margin-left:20px">
+            <img th:src="@{/image/img_2.png}" style="width:30px; height:30px"></img>
+        </a>
+        <p th:text="${count}" style="color:tomato; font-family:cursive"></p>
+    </div>
+</div>
+<h3 th:text="${message}" style="font-family: cursive; color:red"></h3>
+<div class="purchase-details-container" th:each="purchase_detail:${purchase_details}" style="display: flex;">
+    <h3 th:text="${purchase_detail.book.title}+'-Quantity: '+${purchase_detail.quantity}" style="font-family: cursive;color:darkblue"></h3>
+    <div class="input-container" style="flex:1; margin-top: 22px; margin-left: 20px;">
+        <form th:action="@{/user/purchases}" method="post">
+            <input type="hidden" th:value="${purchase_detail.book.id}" name="book_id">
+            <input type="hidden" th:value="${purchase_detail.purchase.id}" name="purchase_id">
+            <input type="submit" value="Delete" style="border: none; background-color: tomato; font-family: cursive; color: white; border-radius: 30px; width: 2cm;">
+        </form>
+    </div>
+</div>
+</body>
+</html>
