@@ -27,17 +27,10 @@ public class OrderController {
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
-    @Operation(summary = "Get Order By User Id", description = "Get Order By User Id API")
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<ApiResponse> getOrderByUserId(@PathVariable("userId") Long userId) {
-        ApiResponse apiResponse = ApiResponse.success(orderService.getOrderByUserId(userId));
-        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
-    }
-
 
 
     @Operation(summary = "Get All Order in History from User Id", description = "Get order with true status by User Id API")
-    @GetMapping("user/{userId}/history")
+    @GetMapping("/{userId}/history")
     public ResponseEntity<ApiResponse> getOrderHistoryByUserId (@PathVariable("userId") Long userId,
                                                                 @RequestParam(value = "pageNo", defaultValue = "1", required = false) int pageNo,
                                                                 @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
@@ -45,6 +38,13 @@ public class OrderController {
     ) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, Sort.by(sortBy).ascending());
         ApiResponse apiResponse = ApiResponse.success(orderService.getOrderHistoryByUserId(userId,pageable));
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Make order from cart from User Id", description = "Change status of the cart to set it ordered API")
+    @GetMapping("/{userId}/make-order")
+    public ResponseEntity<ApiResponse> updateOrderStatusByUserId (@PathVariable("userId") Long userId) {
+        ApiResponse apiResponse = ApiResponse.success(orderService.updateOrderStatusByOrderId(userId));
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 

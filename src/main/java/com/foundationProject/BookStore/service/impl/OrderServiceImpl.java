@@ -5,6 +5,7 @@ import com.foundationProject.BookStore.exception.AppException;
 import com.foundationProject.BookStore.exception.ErrorCode;
 import com.foundationProject.BookStore.exception.ResourceNotFoundException;
 import com.foundationProject.BookStore.model.entity.Order;
+import com.foundationProject.BookStore.model.entity.OrderItem;
 import com.foundationProject.BookStore.model.response.OrderItemResponse;
 import com.foundationProject.BookStore.model.response.OrderResponse;
 import com.foundationProject.BookStore.model.response.PageCustom;
@@ -61,6 +62,14 @@ public class OrderServiceImpl implements OrderService {
                 .pageContent(orders.getContent().stream().map(order -> modelMapper.map(order, OrderResponse.class)).toList())
                 .build();
         return pageCustom;
+    }
+
+    @Override
+    public String updateOrderStatusByOrderId(Long id){
+        Order order = orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order", "id", id));
+        order.setStatus(true);
+        orderRepository.save(order);
+        return "Order with id: " + id + " is ordered successfully";
     }
 
 }
