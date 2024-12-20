@@ -108,5 +108,16 @@ public class OrderItemController {
         ApiResponse apiResponse = ApiResponse.success(orderItemService.getAllOrderedHistoryByUserId(userId,pageable));
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
-
+    @Operation(summary = "Get Cart from User Id", description = "Get order with false status by User Id API")
+    @GetMapping("/cart/{userId}")
+    public ResponseEntity<ApiResponse> getCartByUserId (
+            @PathVariable("userId") Long userId,
+            @RequestParam(value = "pageNo", defaultValue = "1", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = "createdAt", required = false) String sortBy
+    ){
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, Sort.by(sortBy).ascending());
+        ApiResponse apiResponse = ApiResponse.success(orderItemService.getAllCartItemsByUserId(userId,pageable));
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
 }

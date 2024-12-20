@@ -1,6 +1,7 @@
 package com.foundationProject.BookStore.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.foundationProject.BookStore.exception.ResourceNotFoundException;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -46,6 +47,9 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        if (roles == null) {
+            throw new ResourceNotFoundException("Roles", "Roles", roles);
+        }
         for (Role role : roles){
             authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
         }

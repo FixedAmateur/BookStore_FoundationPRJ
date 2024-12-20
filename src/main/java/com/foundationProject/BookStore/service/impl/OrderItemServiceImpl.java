@@ -22,6 +22,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class OrderItemServiceImpl implements OrderItemService {
@@ -134,14 +136,17 @@ public class OrderItemServiceImpl implements OrderItemService {
 
 
     @Override
-    public PageCustom<OrderItemResponse> getAllOrderItemInCart(Long userId, Pageable pageable) {
+    public PageCustom<OrderItemResponse> getAllCartItemsByUserId(Long userId, Pageable pageable) {
+        List<Order> orders = orderRepository.findAllByStatusAndUserIdAsList(false, userId);
+        if (orders.size() != 1) {
+            throw new AppException(ErrorCode.CART_NOT_UNIQUE);
+        }
         Page<OrderItem> orderItems = orderItemRepository.findAllByUserIdAndStatus(userId,false,pageable);
-
         PageCustom<OrderItemResponse> pageCustom = PageCustom.<OrderItemResponse>builder()
                 .pageNo(orderItems.getNumber() + 1)
                 .pageSize(orderItems.getSize())
                 .totalPages(orderItems.getTotalPages())
-                .pageContent(orderItems.getContent().stream().map(orderItem1 -> modelMapper.map(orderItem1, OrderItemResponse.class)).toList())
+                .pageContent(orderItems.getContent().stream().map(orderItem -> modelMapper.map(orderItem, OrderItemResponse.class)).toList())
                 .build();
         return pageCustom;
     }

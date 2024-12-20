@@ -34,14 +34,9 @@ public class OrderController {
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
-    @Operation(summary = "Get Cart from User Id", description = "Get order with false status by User Id API")
-    @GetMapping("user/{userId}/cart")
-    public ResponseEntity<ApiResponse> getCartByUserId (@PathVariable("userId") Long userId){
-        ApiResponse apiResponse = ApiResponse.success(orderService.getCart(userId));
-        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
-    }
 
-    @Operation(summary = "Get All Order History from User Id", description = "Get order with true status by User Id API")
+
+    @Operation(summary = "Get All Order in History from User Id", description = "Get order with true status by User Id API")
     @GetMapping("user/{userId}/history")
     public ResponseEntity<ApiResponse> getOrderHistoryByUserId (@PathVariable("userId") Long userId,
                                                                 @RequestParam(value = "pageNo", defaultValue = "1", required = false) int pageNo,
