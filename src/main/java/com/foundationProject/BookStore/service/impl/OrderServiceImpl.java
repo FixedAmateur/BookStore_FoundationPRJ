@@ -65,11 +65,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public String updateOrderStatusByOrderId(Long id){
-        Order order = orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order", "id", id));
+    public String updateOrderStatusByUserId(Long userId){
+        List<Order> cartLst = orderRepository.findAllByStatusAndUserIdAsList(false, userId);
+        if (cartLst.size() != 1) {
+            throw new AppException(ErrorCode.CART_NOT_UNIQUE);
+        }
+        Order order = cartLst.get(0);
+        OrderResponse orderResponse = modelMapper.map(order, OrderResponse.class);
         order.setStatus(true);
         orderRepository.save(order);
-        return "Order with id: " + id + " is ordered successfully";
+        return "Cart of user id: " + userId + " is ordered successfully";
     }
 
 }

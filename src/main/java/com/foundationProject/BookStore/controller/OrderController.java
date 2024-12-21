@@ -44,7 +44,7 @@ public class OrderController {
     @Operation(summary = "Make order from cart from User Id", description = "Change status of the cart to set it ordered API")
     @GetMapping("/{userId}/make-order")
     public ResponseEntity<ApiResponse> updateOrderStatusByUserId (@PathVariable("userId") Long userId) {
-        ApiResponse apiResponse = ApiResponse.success(orderService.updateOrderStatusByOrderId(userId));
+        ApiResponse apiResponse = ApiResponse.success(orderService.updateOrderStatusByUserId(userId));
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 

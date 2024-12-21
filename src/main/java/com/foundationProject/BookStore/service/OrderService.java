@@ -16,5 +16,5 @@ public interface OrderService {
 
     PageCustom<OrderResponse> getOrderHistoryByUserId(Long userId, Pageable pageable);
 
-    String updateOrderStatusByOrderId(Long orderId);
+    String updateOrderStatusByUserId(Long userId);
 }
